@@ -1,0 +1,26 @@
+---
+- hosts: all
+  remote_user: root
+
+  tasks:
+
+    # Walk through account creation, modification, and deletion
+    - name: test basic user account creation
+      user: 
+        name: mina 
+        home: /home/mina 
+        shell: /bin/bash
+
+    - name: add public key of user mina to authorized_key
+      authorized_key: 
+       user: mina 
+       key: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDJHnBYz7l7PDPpqj/j8VJMtNgbG7bZuSKYlDaDCitBT5VkohA6vA4SsE7FBmDjjG9IFk9zkDn3ckd+IE2Yr6W5r/y1cxWUX8UMXJ2uiumqKZgC8EgInb/UyM0Secsl6wPQfEVD5iwC78KorVIhNc7lb8JGdDSno5dnVK5xKG5U/ybZs/QeodPBKws1hrvhV1Tk3045dQ9F3gz8TiMc//QZaUf4UOvXlsBV+QJ7uLrnh+SziV7LeXd3CdbVohoxIgEqHv68Zqu2csBKCoy3R8UeAJKizaFpPKWwMC205XQmpJkF9+TpdlxRT9Ic+oc9K8gAE5kMIsEZq68rc6qECeuF minasoft@MinaSoft-NB'
+
+
+
+    - name: add user mina to sudoers file 
+      lineinfile: 
+       dest: /etc/sudoers  
+       line: 'mina ALL=(ALL) NOPASSWD:ALL' 
+       validate: 'visudo -cf %s'
+      
